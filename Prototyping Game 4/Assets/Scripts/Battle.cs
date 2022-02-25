@@ -13,13 +13,13 @@ public class Battle : MonoBehaviour
     [SerializeField] GladiatorGenerator gen;
     void Start()
     {
-        Gladiator a = gen.GenerateGladiator();
-        Gladiator b = gen.GenerateGladiator();
-        Debug.Log(a);
-        Debug.Log(b);
-        Gladiator winner = Simulate(a,b);
-        PrintReports();
-        Debug.Log("Winna " + winner.name);
+        //Gladiator a = gen.GenerateGladiator();
+        //Gladiator b = gen.GenerateGladiator();
+        //Debug.Log(a);
+        //Debug.Log(b);
+        //Gladiator winner = Simulate(a,b);
+        //PrintReports();
+        //Debug.Log("Winna " + winner.name);
         
 
 

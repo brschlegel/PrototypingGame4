@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 1524029706}
   - component: {fileID: 1524029710}
   - component: {fileID: 1524029709}
+  - component: {fileID: 1524029711}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -247,3 +248,21 @@ MonoBehaviour:
   damageModifierMin: 0.8
   damageModifierMax: 1.2
   gen: {fileID: 1524029709}
+--- !u!114 &1524029711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1524029705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16f60a9f645810d4f9d9be6ae85826e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  strength: {fileID: 11400000, guid: 84001aaace9640c4191410554e6037ae, type: 2}
+  armourQuality: {fileID: 11400000, guid: f0d788c758e247f49948ddf5e522cfaf, type: 2}
+  weaponQuality: {fileID: 11400000, guid: 43870b1acb6394a4cab6b3504c7e9aa3, type: 2}
+  weaponType: {fileID: 11400000, guid: f5048a96d1b678c4ea26e68a9bc8a9a2, type: 2}
+  health: {fileID: 11400000, guid: 50257bf304523f54ab3cf0821fefbd83, type: 2}
+  missChance: {fileID: 11400000, guid: 6432b0070ad8d334eb02de16ce83e3c2, type: 2}
