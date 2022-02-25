@@ -10,6 +10,9 @@ public class FactionSystem : MonoBehaviour
     [Header("Faction Type")]
     public factionType currentFaction;
 
+    [Header("Gladiator")]
+    public Gladiator gladiator;
+
     [Header("Base Truth Stats")]
     public float baseTruthPercent = 50;
     [SerializeField] float truthMargin = 10;
@@ -22,8 +25,8 @@ public class FactionSystem : MonoBehaviour
     [SerializeField] int bribeIncrement = 1;
 
     [Header("Bribe Costs")]
-    public float baseBribeCost = 100;
-    public float basePremiumCost = 5;
+    public int baseBribeCost = 100;
+    public int basePremiumCost = 5;
     [SerializeField] float costMargin = 50;
     [SerializeField] int costIncrement = 1;
     [SerializeField] float costScale = 1.2f;
@@ -39,8 +42,8 @@ public class FactionSystem : MonoBehaviour
     [SerializeField] int mistrustIncrement = 1;
 
     [Header("Rumors")]
-    public List<string> trueRumors = new List<string>();
-    public List<string> falseRumors = new List<string>();
+    [SerializeField]RumorGenerator rumorGen;
+    List<string> rumors = new List<string>();
 
 
 
@@ -56,7 +59,7 @@ public class FactionSystem : MonoBehaviour
         baseBribeSingleRumorEffect += (baseBribeEffect - initialBaseBribe);
 
         //Set initial bribe
-        baseBribeCost += adjustBaseStat(costMargin, costIncrement);
+        baseBribeCost += (int)adjustBaseStat(costMargin, costIncrement);
 
         //Set initial base trust effect
         baseTrustEffect += adjustBaseStat(trustMargin, trustIncrement);
@@ -78,68 +81,49 @@ public class FactionSystem : MonoBehaviour
     public void MistrustPlayer() => baseTruthPercent = Mathf.Clamp(baseTruthPercent -= baseMistrustEffect, 0, 100);
 
     //Rumor Methods
-    public string GetRumor(float offset = 0)
+    public void GetRumor(int numOfRumors, float offset = 0)
     {
-        int percent = Random.Range(0, 100);
+        float percent = baseTruthPercent;
         percent += (int)offset;
 
-        if (percent <= baseTruthPercent)
-            return FindRumor(trueRumors);
-        else
-            return FindRumor(falseRumors);
+        List<string> newRumors = rumorGen.GetRumorsAboutGladiator(gladiator, numOfRumors, (percent / 100.0f));
+        foreach(string rumor in newRumors)
+        {
+            rumors.Add(rumor);
+        }
+
     }
 
-    string FindRumor(List<string> rumorList)
+    void GetTrueRumor(int numOfRumors)
     {
-        int index = Random.Range(0, rumorList.Count);
-        string rumor = rumorList[index];
-        rumorList.Remove(rumor);
-        return rumor;
+        List<string> newRumors = rumorGen.GetRumorsAboutGladiator(gladiator, numOfRumors, 1.0f);
+        foreach (string rumor in newRumors)
+        {
+            rumors.Add(rumor);
+        }
     }
 
     //Action Methods
-    public string VisitFaction(FactionSystem otherFaction)
+    public void VisitFaction(FactionSystem otherFaction)
     {
         TrustPlayer();
         otherFaction.MistrustPlayer();
-        return FindRumor(trueRumors);
+        GetTrueRumor(1);
     }
 
-    public string BribeFaction()
+    public void BribeFaction()
     {
-        //Need to grab how much money the player has
         TrustPlayer(baseBribeEffect);
-        baseBribeCost *= costScale;
-        return GetRumor(baseBribeSingleRumorEffect);
+        baseBribeCost = (int)((float)baseBribeCost * costScale);
+        GetRumor(1, baseBribeSingleRumorEffect);
     }
 
-    public string PremiumBribeFaction()
+    public void PremiumBribeFaction()
     {
-        //Need to grab how much premium money the player has
         TrustPlayer(baseBribeEffect);
-        basePremiumCost *= costScale;
-        return FindRumor(trueRumors);
+        basePremiumCost = (int)((float)basePremiumCost * costScale);
+        GetTrueRumor(1);
     }
 
-    //Populate Rumors
-    public void PopulateTrueRumors(string[] rumors)
-    {
-        trueRumors.Clear();
-
-        foreach(string rumor in rumors)
-        {
-            trueRumors.Add(rumor);
-        }
-    }
-
-    public void PopulateFalseRumors(string[] rumors)
-    {
-        falseRumors.Clear();
-
-        foreach (string rumor in rumors)
-        {
-            falseRumors.Add(rumor);
-        }
-    }
-
+    public void ClearRumors() => rumors.Clear();
 }
