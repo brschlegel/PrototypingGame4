@@ -81,6 +81,10 @@ public class GameManager : MonoBehaviour
 
         if (winner.Equals(selectedGladiator))
             coins += (currentBet * 2);
+
+        //Start game loop over again
+        AssignFactionsAndGladiators();
+
     }
 
     void SetBet(int bet, string side)
