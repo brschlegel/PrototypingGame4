@@ -20,7 +20,7 @@ public class RumorGenerator : MonoBehaviour
     [SerializeField]
     private RumorMessages missChance;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         messages = new Dictionary<string, RumorMessages>();
         messages["Strength"] = strength;

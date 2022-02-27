@@ -43,7 +43,7 @@ public class FactionSystem : MonoBehaviour
 
     [Header("Rumors")]
     [SerializeField]RumorGenerator rumorGen;
-    List<string> rumors = new List<string>();
+    public List<string> rumors = new List<string>();
 
 
 
@@ -81,7 +81,7 @@ public class FactionSystem : MonoBehaviour
     public void MistrustPlayer() => baseTruthPercent = Mathf.Clamp(baseTruthPercent -= baseMistrustEffect, 0, 100);
 
     //Rumor Methods
-    public void GetRumor(int numOfRumors, float offset = 0)
+    public List<string> GetRumor(int numOfRumors, float offset = 0)
     {
         float percent = baseTruthPercent;
         percent += (int)offset;
@@ -91,38 +91,39 @@ public class FactionSystem : MonoBehaviour
         {
             rumors.Add(rumor);
         }
-
+        return newRumors;
     }
 
-    void GetTrueRumor(int numOfRumors)
+    string GetTrueRumor(int numOfRumors)
     {
         List<string> newRumors = rumorGen.GetRumorsAboutGladiator(gladiator, numOfRumors, 1.0f);
         foreach (string rumor in newRumors)
         {
             rumors.Add(rumor);
         }
+        return newRumors[0];
     }
 
     //Action Methods
-    public void VisitFaction(FactionSystem otherFaction)
+    public string VisitFaction(FactionSystem otherFaction)
     {
         TrustPlayer();
         otherFaction.MistrustPlayer();
-        GetTrueRumor(1);
+        return GetTrueRumor(1);
     }
 
-    public void BribeFaction()
+    public string BribeFaction()
     {
         TrustPlayer(baseBribeEffect);
         baseBribeCost = (int)((float)baseBribeCost * costScale);
-        GetRumor(1, baseBribeSingleRumorEffect);
+        return GetRumor(1, baseBribeSingleRumorEffect)[0];
     }
 
-    public void PremiumBribeFaction()
+    public string PremiumBribeFaction()
     {
         TrustPlayer(baseBribeEffect);
         basePremiumCost = (int)((float)basePremiumCost * costScale);
-        GetTrueRumor(1);
+        return GetTrueRumor(1);
     }
 
     public void ClearRumors() => rumors.Clear();

@@ -5,10 +5,30 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [Header("Money Variables")]
-    public int coins;
+    [SerializeField]
+    private int coins;
     public int premiumCoins;
     int currentBet;
 
+    public int Coins
+    {
+        get { return coins; }
+        set
+        {
+            coins = value;
+            coinUI.SetGold(value);
+        }
+    }
+
+    public int PremiumCoins
+    {
+        get { return premiumCoins; } 
+        set
+        {
+            premiumCoins = value;
+            coinUI.SetGems(value);  
+        }
+    }
     [Header("Faction Variables")]
     public FactionSystem[] factions;
 
@@ -17,12 +37,17 @@ public class GameManager : MonoBehaviour
     [SerializeField] FactionSystem rightFaction;
     [SerializeField] int numOfRumors;
 
+    [SerializeField] FactionUIManager leftUI;
+    [SerializeField] FactionUIManager rightUI;
+
     private Gladiator selectedGladiator;
     private Gladiator winner;
 
     [Header("Components")]
     [SerializeField] GladiatorGenerator gladGen;
     [SerializeField] Battle battleSim;
+    [SerializeField] RumorGenerator rumorGen;
+    [SerializeField] CoinUIManager coinUI;
 
     // Start is called before the first frame update
     void Start()
@@ -63,13 +88,23 @@ public class GameManager : MonoBehaviour
         leftFaction.gladiator = gladGen.GenerateGladiator();
         rightFaction.gladiator = gladGen.GenerateGladiator();
 
-        //Clear faction rumors
-        leftFaction.ClearRumors();
-        rightFaction.ClearRumors();
 
-        //Get initial rumors
+        
+        //Setup UI
+        leftUI.SetFactionName(leftFaction.name);
+        rightUI.SetFactionName(rightFaction.name);
+
         leftFaction.GetRumor(numOfRumors);
         rightFaction.GetRumor(numOfRumors);
+
+        leftUI.DisplayRumors(leftFaction.rumors);
+        rightUI.DisplayRumors(rightFaction.rumors);
+
+        leftUI.SetBribeCost(leftFaction.baseBribeCost);
+        rightUI.SetBribeCost(rightFaction.baseBribeCost);
+
+        coinUI.SetGems(PremiumCoins);
+        coinUI.SetGold(Coins);
 
         Debug.Log(leftFaction.gladiator);
         Debug.Log(rightFaction.gladiator);
@@ -90,37 +125,63 @@ public class GameManager : MonoBehaviour
     void SetBet(int bet, string side)
     {
         currentBet = bet;
-        coins -= bet;
+        Coins -= bet;
 
         selectedGladiator = GetSide(side).gladiator;
     }
 
-    void Visit(string side, string opponent)
+    public void Visit(string side)
     {
-        GetSide(side).VisitFaction(GetSide(opponent));
+        string opponent = side == "left" ? "right" : "left";
+        string r = GetSide(side).VisitFaction(GetSide(opponent));
+        if (side == "left")
+        {
+            leftUI.DisplayRumor(r);
+        }
+        else
+        {
+            rightUI.DisplayRumor(r);
+        }
     }
 
-    void Bribe(string side)
+    public void Bribe(string side)
     {
         FactionSystem currentFaction = GetSide(side);
 
         if (coins >= currentFaction.baseBribeCost)
         {
-            currentFaction.BribeFaction();
-            coins -= currentFaction.baseBribeCost;
+            string r = currentFaction.BribeFaction();
+            Coins -= currentFaction.baseBribeCost;
+            if(side == "left")
+            {
+                leftUI.DisplayRumor(r);
+            }
+            else
+            {
+                rightUI.DisplayRumor(r);
+            }
         }
             
     }
 
-    void BribePremium(string side)
+    public void BribePremium(string side)
     {
         FactionSystem currentFaction = GetSide(side);
 
         if (premiumCoins >= currentFaction.basePremiumCost)
         {
-            currentFaction.PremiumBribeFaction();
-            premiumCoins -= currentFaction.basePremiumCost;
+            string r = currentFaction.PremiumBribeFaction();
+            PremiumCoins -= currentFaction.basePremiumCost;
+            if (side == "left")
+            {
+                leftUI.DisplayRumor(r);
+            }
+            else
+            {
+                rightUI.DisplayRumor(r);
+            }
         }
+     
     }
 
     //Helper Function

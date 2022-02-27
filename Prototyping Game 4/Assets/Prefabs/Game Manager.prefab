@@ -1,0 +1,97 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8830083916721471654
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8830083916721471653}
+  - component: {fileID: 8830083916721471652}
+  - component: {fileID: 8830083916721471707}
+  - component: {fileID: 8830083916721471705}
+  m_Layer: 0
+  m_Name: Game Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8830083916721471653
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8830083916721471654}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8830083916721471652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8830083916721471654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ca0f5d6f9bfa0e41ab650b536b47ed1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coins: 1000
+  premiumCoins: 10
+  factions:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  leftFaction: {fileID: 0}
+  rightFaction: {fileID: 0}
+  numOfRumors: 0
+  gladGen: {fileID: 8830083916721471707}
+  battleSim: {fileID: 8830083916721471705}
+--- !u!114 &8830083916721471707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8830083916721471654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d856041a3a622e741b5eb5ffb85b9f94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  strengthMin: 3
+  strengthMax: 8
+  weaponQualityMin: 1
+  weaponQualityMax: 4
+  armourQualityMin: 1
+  armourQualityMax: 4
+  healthMin: 20
+  healthMax: 30
+  missChanceMin: 0.05
+  missChanceMax: 0.1
+--- !u!114 &8830083916721471705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8830083916721471654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 800452aa6202bbc43b2c8afbdcf0942f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponTrianglePositive: 2
+  weaponTriangleNegative: 0.5
+  damageModifierMin: 0.8
+  damageModifierMax: 1.2
+  gen: {fileID: 8830083916721471707}
