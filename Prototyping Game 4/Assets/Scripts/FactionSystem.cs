@@ -26,10 +26,11 @@ public class FactionSystem : MonoBehaviour
 
     [Header("Bribe Costs")]
     public int baseBribeCost = 100;
-    public int basePremiumCost = 5;
+    public int basePremiumCost = 2;
     [SerializeField] float costMargin = 50;
     [SerializeField] int costIncrement = 1;
     [SerializeField] float costScale = 1.2f;
+    public int currentCost;
 
     [Header("Trust Stats")]
     public float baseTrustEffect = 10;
@@ -44,6 +45,7 @@ public class FactionSystem : MonoBehaviour
     [Header("Rumors")]
     [SerializeField]RumorGenerator rumorGen;
     public List<string> rumors = new List<string>();
+
 
 
 
@@ -66,6 +68,7 @@ public class FactionSystem : MonoBehaviour
 
         //Set initial base mistrust effect
         baseMistrustEffect += adjustBaseStat(mistrustMargin, mistrustIncrement);
+        ResetCosts();
     }
 
     //Base Stat Methods
@@ -115,16 +118,21 @@ public class FactionSystem : MonoBehaviour
     public string BribeFaction()
     {
         TrustPlayer(baseBribeEffect);
-        baseBribeCost = (int)((float)baseBribeCost * costScale);
+        currentCost = (int)((float)currentCost * costScale);
         return GetRumor(1, baseBribeSingleRumorEffect)[0];
     }
 
     public string PremiumBribeFaction()
     {
         TrustPlayer(baseBribeEffect);
-        basePremiumCost = (int)((float)basePremiumCost * costScale);
         return GetTrueRumor(1);
     }
 
     public void ClearRumors() => rumors.Clear();
+
+    public void ResetCosts()
+    {
+        currentCost = baseBribeCost;
+        
+    }
 }

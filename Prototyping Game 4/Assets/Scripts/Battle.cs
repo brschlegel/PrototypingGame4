@@ -5,7 +5,7 @@ using UnityEngine;
 public class Battle : MonoBehaviour
 {
     // Start is called before the first frame update
-    Queue<string> turnReports = new Queue<string>();
+    public Queue<string> turnReports = new Queue<string>();
     [SerializeField] private float weaponTrianglePositive;
     [SerializeField] private float weaponTriangleNegative;
     [SerializeField] private float damageModifierMin;

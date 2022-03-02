@@ -48,7 +48,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] Battle battleSim;
     [SerializeField] RumorGenerator rumorGen;
     [SerializeField] CoinUIManager coinUI;
+    [SerializeField] BetManager betManager;
+    [SerializeField] BattleUIManager battleUI;
 
+    private bool visited = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -69,11 +72,14 @@ public class GameManager : MonoBehaviour
         //Clear out the factions from the previous round
         leftFaction = null;
         rightFaction = null;
+        rumorGen.Reset();
+        visited = false;
 
         //Make a copy of the faction array
         List<FactionSystem> currentFactions = new List<FactionSystem>();
         foreach(FactionSystem faction in factions)
         {
+            faction.ResetCosts();
             currentFactions.Add(faction);
         }
 
@@ -94,14 +100,19 @@ public class GameManager : MonoBehaviour
         leftUI.SetFactionName(leftFaction.name);
         rightUI.SetFactionName(rightFaction.name);
 
+        leftFaction.ClearRumors();
+        rightFaction.ClearRumors();
+        leftUI.Reset();
+        rightUI.Reset();
+
         leftFaction.GetRumor(numOfRumors);
         rightFaction.GetRumor(numOfRumors);
 
         leftUI.DisplayRumors(leftFaction.rumors);
         rightUI.DisplayRumors(rightFaction.rumors);
 
-        leftUI.SetBribeCost(leftFaction.baseBribeCost);
-        rightUI.SetBribeCost(rightFaction.baseBribeCost);
+        leftUI.SetBribeCost((int)leftFaction.currentCost);
+        rightUI.SetBribeCost((int)rightFaction.currentCost);
 
         coinUI.SetGems(PremiumCoins);
         coinUI.SetGold(Coins);
@@ -110,7 +121,7 @@ public class GameManager : MonoBehaviour
         Debug.Log(rightFaction.gladiator);
     }
 
-    void ResolveRound()
+    Gladiator ResolveRound()
     {
         winner = battleSim.Simulate(leftFaction.gladiator, rightFaction.gladiator);
 
@@ -119,7 +130,7 @@ public class GameManager : MonoBehaviour
 
         //Start game loop over again
         AssignFactionsAndGladiators();
-
+        return winner;
     }
 
     void SetBet(int bet, string side)
@@ -132,15 +143,19 @@ public class GameManager : MonoBehaviour
 
     public void Visit(string side)
     {
-        string opponent = side == "left" ? "right" : "left";
-        string r = GetSide(side).VisitFaction(GetSide(opponent));
-        if (side == "left")
+        if (!visited)
         {
-            leftUI.DisplayRumor(r);
-        }
-        else
-        {
-            rightUI.DisplayRumor(r);
+            string opponent = side == "left" ? "right" : "left";
+            string r = GetSide(side).VisitFaction(GetSide(opponent));
+            if (side == "left")
+            {
+                leftUI.DisplayRumor(r);
+            }
+            else
+            {
+                rightUI.DisplayRumor(r);
+            }
+            visited = true;
         }
     }
 
@@ -150,15 +165,18 @@ public class GameManager : MonoBehaviour
 
         if (coins >= currentFaction.baseBribeCost)
         {
+            Coins -= currentFaction.currentCost;
             string r = currentFaction.BribeFaction();
-            Coins -= currentFaction.baseBribeCost;
+       
             if(side == "left")
             {
                 leftUI.DisplayRumor(r);
+                leftUI.SetBribeCost(leftFaction.currentCost);
             }
             else
             {
                 rightUI.DisplayRumor(r);
+                rightUI.SetBribeCost(rightFaction.currentCost);
             }
         }
             
@@ -194,4 +212,24 @@ public class GameManager : MonoBehaviour
 
         return null;
     }
+
+    public void ActivateBetScreen()
+    {
+        betManager.CachedGold = Coins;
+        betManager.SetFactionNames(leftFaction.name, rightFaction.name);
+        betManager.gameObject.SetActive(true);
+    }
+
+    public void BetButton()
+    {
+        battleUI.SetStats(leftFaction.gladiator, rightFaction.gladiator);
+        SetBet(betManager.CurrentBetTotal, betManager.side);
+        battleUI.Winner = ResolveRound();
+        battleUI.Reports = battleSim.turnReports;
+        battleUI.PredictedWinner = selectedGladiator;
+      
+        
+
+    }
+
 }

@@ -9,7 +9,8 @@ public class FactionUIManager : MonoBehaviour
     public Transform rumorHolder;
     public GameObject rumorDisplayPrefab;
     public TextMeshProUGUI bribeText;
-   
+
+    public List<GameObject> rumorGenButtons;
 
     // Start is called before the first frame update
     void Start()
@@ -20,7 +21,21 @@ public class FactionUIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        //Super ugly, but need a way to stop the player from getting more rumors than there are stats
+        if(rumorHolder.childCount >=6)
+        {
+            foreach(GameObject g in rumorGenButtons)
+            {
+                g.SetActive(false); 
+            }
+        }
+        else
+        {
+            foreach (GameObject g in rumorGenButtons)
+            {
+                g.SetActive(true);
+            }
+        }
     }
     public void SetFactionName(string name)
     {
@@ -38,13 +53,30 @@ public class FactionUIManager : MonoBehaviour
 
     public void DisplayRumor(string r)
     {
+
         GameObject g = Instantiate(rumorDisplayPrefab, rumorHolder);
         g.transform.GetComponentInChildren<TextMeshProUGUI>().text = r;
     }
 
+
+    public void ClearRumors()
+    {
+        foreach(Transform t in rumorHolder)
+        {
+            Destroy(t.gameObject);
+        }
+    }
     public void SetBribeCost(int cost)
     {
         bribeText.text = "RUMOR \n " + cost + " GOLD";
+    }
+    public void Reset()
+    {
+        ClearRumors();
+        foreach (GameObject g in rumorGenButtons)
+        {
+            g.SetActive(true);
+        }
     }
 
 

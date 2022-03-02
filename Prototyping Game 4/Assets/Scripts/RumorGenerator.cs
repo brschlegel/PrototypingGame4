@@ -6,6 +6,7 @@ public class RumorGenerator : MonoBehaviour
 {
     static List<string> stats = new List<string>() {"Strength", "ArmourQuality", "WeaponQuality", "WeaponType", "Health", "MissChance" };
     public Dictionary<string, RumorMessages> messages;
+    public Dictionary<Gladiator, List<string>> availableStats;
 
     [SerializeField]
     private RumorMessages strength;
@@ -29,7 +30,7 @@ public class RumorGenerator : MonoBehaviour
         messages["WeaponType"] = weaponType;
         messages["Health"] = health;
         messages["MissChance"] = missChance;
-
+        availableStats = new Dictionary<Gladiator, List<string>>();
 
     }
 
@@ -44,8 +45,17 @@ public class RumorGenerator : MonoBehaviour
         //Return string
         List<string> ret = new List<string>();
 
+        List<string> statCopy;
         //StatName string
-        List<string> statCopy = new List<string>(stats);
+        if (availableStats.ContainsKey(g))
+        {
+            statCopy = availableStats[g];
+        }
+        else
+        {
+            statCopy = new List<string>(stats);
+            availableStats.Add(g, statCopy);
+        }
         for(int i = 0; i < amount; i++)
         {
             bool truthfulness = Random.value < truthChance;
@@ -75,6 +85,7 @@ public class RumorGenerator : MonoBehaviour
 
 
         }
+        availableStats[g] = statCopy;
         return ret;
     }
 
@@ -93,5 +104,10 @@ public class RumorGenerator : MonoBehaviour
             copy.Remove(trueMessage);
             return copy[Random.Range(0, copy.Count)].message;
         }
+    }
+
+    public void Reset()
+    {
+        availableStats.Clear();
     }
 }

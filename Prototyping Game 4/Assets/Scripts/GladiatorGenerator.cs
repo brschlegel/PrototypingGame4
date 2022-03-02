@@ -18,6 +18,16 @@ public struct Gladiator
     {
         return string.Format("Name: {0} | Strength: {1} | weaponQuality: {2} | weaponType: {3} | armourQuality: {4} | health: {5} | missChance: {6:0.00}", name,strength, weaponQuality, weaponType, armourQuality, health, missChance);
     }
+    public bool Equals(Gladiator other)
+    {
+        bool n = name == other.name;
+        bool s = strength == other.strength;
+        bool wt = weaponType == other.weaponType;
+        bool m = missChance == other.missChance;
+        bool wq = weaponQuality == other.weaponQuality;
+        bool aq = armourQuality == other.armourQuality;
+        return n && s && wt && m && wq && aq;
+    }
 }
 
 public class GladiatorGenerator : MonoBehaviour
