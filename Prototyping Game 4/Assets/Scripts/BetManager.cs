@@ -48,7 +48,8 @@ public class BetManager : MonoBehaviour
         //Kinda ugly to check this in update but waddya gonna do
         bool validBet = betAmount > 0;
         bool sidePicked = side == "left" || side == "right";
-        if(sidePicked && validBet && !betButton.activeSelf)
+        bool betAmountPicked = int.Parse(amountText.text) != 0;
+        if(sidePicked && validBet && betAmountPicked && !betButton.activeSelf)
         {
             betButton.SetActive(true);
         }
@@ -68,6 +69,7 @@ public class BetManager : MonoBehaviour
         int result = int.Parse(amountText.text) + betAmount;
         if (tempGold - betAmount >= 0)
         {
+            Debug.Log("temp gold " + tempGold + " betamount " + betAmount);
             amountText.text = result.ToString();
             tempGold -= betAmount;
         }
