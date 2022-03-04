@@ -218,6 +218,7 @@ public class GameManager : MonoBehaviour
         betManager.CachedGold = Coins;
         betManager.SetFactionNames(leftFaction.name, rightFaction.name);
         betManager.gameObject.SetActive(true);
+        betManager.ResetBet();
     }
 
     public void BetButton()
