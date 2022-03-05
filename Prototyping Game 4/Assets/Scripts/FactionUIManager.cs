@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class FactionUIManager : MonoBehaviour
 {
     public TextMeshProUGUI factionName;
+    public Image factionSprite;
     public Transform rumorHolder;
     public GameObject rumorDisplayPrefab;
     public TextMeshProUGUI bribeText;
@@ -40,6 +42,11 @@ public class FactionUIManager : MonoBehaviour
     public void SetFactionName(string name)
     {
         factionName.text = name;    
+    }
+
+    public void SetFactionSprite(Sprite sprite)
+    {
+        factionSprite.sprite = sprite;
     }
 
     public void DisplayRumors(List<string> rumors)
