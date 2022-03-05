@@ -9,6 +9,7 @@ public class FactionSystem : MonoBehaviour
 
     [Header("Faction Type")]
     public factionType currentFaction;
+    public Sprite sprite;
 
     [Header("Gladiator")]
     public Gladiator gladiator;

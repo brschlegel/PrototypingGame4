@@ -23,6 +23,9 @@ public class BetManager : MonoBehaviour
 
     public TextMeshProUGUI leftFactionName;
     public TextMeshProUGUI rightFactionName;
+
+    public Image leftFactionImage;
+    public Image rightFactionImage;
     
     public int BetAmount
     {
@@ -121,6 +124,12 @@ public class BetManager : MonoBehaviour
     {
         leftFactionName.text = left;
         rightFactionName.text = right;
+    }
+
+    public void SetFactionSprites(Sprite left, Sprite right)
+    {
+        leftFactionImage.sprite = left;
+        rightFactionImage.sprite = right;
     }
 
     public void SetCacheAmount()

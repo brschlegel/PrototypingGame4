@@ -100,6 +100,9 @@ public class GameManager : MonoBehaviour
         leftUI.SetFactionName(leftFaction.name);
         rightUI.SetFactionName(rightFaction.name);
 
+        leftUI.SetFactionSprite(leftFaction.sprite);
+        rightUI.SetFactionSprite(rightFaction.sprite);
+
         leftFaction.ClearRumors();
         rightFaction.ClearRumors();
         leftUI.Reset();
@@ -217,6 +220,7 @@ public class GameManager : MonoBehaviour
     {
         betManager.CachedGold = Coins;
         betManager.SetFactionNames(leftFaction.name, rightFaction.name);
+        betManager.SetFactionSprites(leftFaction.sprite, rightFaction.sprite);
         betManager.gameObject.SetActive(true);
         betManager.ResetBet();
     }
