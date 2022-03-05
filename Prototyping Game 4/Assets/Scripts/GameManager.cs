@@ -57,8 +57,6 @@ public class GameManager : MonoBehaviour
     {
         AssignFactionsAndGladiators();
 
-        //Show base trust
-        UpdateTrust();
     }
 
     // Update is called once per frame
@@ -122,6 +120,8 @@ public class GameManager : MonoBehaviour
 
         coinUI.SetGems(PremiumCoins);
         coinUI.SetGold(Coins);
+
+        UpdateTrust();
 
         Debug.Log(leftFaction.gladiator);
         Debug.Log(rightFaction.gladiator);

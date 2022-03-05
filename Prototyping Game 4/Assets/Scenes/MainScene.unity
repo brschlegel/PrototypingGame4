@@ -353,7 +353,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &28650735
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2190,8 +2190,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: ea205e447e1163b43917dee2de4c14ec, type: 3}
     - target: {fileID: 5195323760590856649, guid: ebaa63cb7e8efcf4b9964ab971135eb3, type: 3}
+      propertyPath: bribeIncrement
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5195323760590856649, guid: ebaa63cb7e8efcf4b9964ab971135eb3, type: 3}
       propertyPath: currentFaction
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5195323760590856649, guid: ebaa63cb7e8efcf4b9964ab971135eb3, type: 3}
+      propertyPath: baseBribeEffect
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5195323760590856650, guid: ebaa63cb7e8efcf4b9964ab971135eb3, type: 3}
       propertyPath: m_RootOrder
@@ -5458,6 +5466,14 @@ PrefabInstance:
       propertyPath: factionSprite
       value: 
       objectReference: {fileID: 21300000, guid: cf58e670096eee44c839ae53246b2fb4, type: 3}
+    - target: {fileID: 5195323760590856649, guid: ebaa63cb7e8efcf4b9964ab971135eb3, type: 3}
+      propertyPath: bribeIncrement
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5195323760590856649, guid: ebaa63cb7e8efcf4b9964ab971135eb3, type: 3}
+      propertyPath: baseBribeEffect
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5195323760590856650, guid: ebaa63cb7e8efcf4b9964ab971135eb3, type: 3}
       propertyPath: m_RootOrder
       value: 9
@@ -6817,8 +6833,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 81e9d22d835d38b4cb7759ff28188faf, type: 3}
     - target: {fileID: 5195323760590856649, guid: ebaa63cb7e8efcf4b9964ab971135eb3, type: 3}
+      propertyPath: bribeIncrement
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5195323760590856649, guid: ebaa63cb7e8efcf4b9964ab971135eb3, type: 3}
       propertyPath: currentFaction
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5195323760590856649, guid: ebaa63cb7e8efcf4b9964ab971135eb3, type: 3}
+      propertyPath: baseBribeEffect
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5195323760590856650, guid: ebaa63cb7e8efcf4b9964ab971135eb3, type: 3}
       propertyPath: m_RootOrder
