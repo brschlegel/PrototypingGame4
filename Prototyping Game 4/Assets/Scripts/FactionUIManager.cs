@@ -11,6 +11,7 @@ public class FactionUIManager : MonoBehaviour
     public Transform rumorHolder;
     public GameObject rumorDisplayPrefab;
     public TextMeshProUGUI bribeText;
+    public TextMeshProUGUI trustText;
 
     public List<GameObject> rumorGenButtons;
 
@@ -65,6 +66,14 @@ public class FactionUIManager : MonoBehaviour
         g.transform.GetComponentInChildren<TextMeshProUGUI>().text = r;
     }
 
+    public void DisplayFact(string r)
+    {
+        GameObject g = Instantiate(rumorDisplayPrefab, rumorHolder);
+        TextMeshProUGUI fact = g.transform.GetComponentInChildren<TextMeshProUGUI>();
+        fact.text = r;
+        fact.color = Color.green;
+    }
+
 
     public void ClearRumors()
     {
@@ -77,6 +86,19 @@ public class FactionUIManager : MonoBehaviour
     {
         bribeText.text = "RUMOR \n " + cost + " GOLD";
     }
+
+    public void UpdateTrust(int percent)
+    {
+        if (percent < 30)
+            trustText.color = Color.red;
+        else if (percent >= 30 && percent <= 70)
+            trustText.color = Color.yellow;
+        else if (percent > 70)
+            trustText.color = Color.green;
+
+        trustText.text = percent.ToString() + "%";
+    }
+
     public void Reset()
     {
         ClearRumors();

@@ -56,6 +56,9 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         AssignFactionsAndGladiators();
+
+        //Show base trust
+        UpdateTrust();
     }
 
     // Update is called once per frame
@@ -152,14 +155,16 @@ public class GameManager : MonoBehaviour
             string r = GetSide(side).VisitFaction(GetSide(opponent));
             if (side == "left")
             {
-                leftUI.DisplayRumor(r);
+                leftUI.DisplayFact(r);
             }
             else
             {
-                rightUI.DisplayRumor(r);
+                rightUI.DisplayFact(r);
             }
             visited = true;
         }
+
+        UpdateTrust();
     }
 
     public void Bribe(string side)
@@ -182,6 +187,8 @@ public class GameManager : MonoBehaviour
                 rightUI.SetBribeCost(rightFaction.currentCost);
             }
         }
+
+        UpdateTrust();
             
     }
 
@@ -195,13 +202,15 @@ public class GameManager : MonoBehaviour
             PremiumCoins -= currentFaction.basePremiumCost;
             if (side == "left")
             {
-                leftUI.DisplayRumor(r);
+                leftUI.DisplayFact(r);
             }
             else
             {
-                rightUI.DisplayRumor(r);
+                rightUI.DisplayFact(r);
             }
         }
+
+        UpdateTrust();
      
     }
 
@@ -235,6 +244,12 @@ public class GameManager : MonoBehaviour
       
         
 
+    }
+
+    void UpdateTrust()
+    {
+        leftUI.UpdateTrust((int)leftFaction.baseTruthPercent);
+        rightUI.UpdateTrust((int)rightFaction.baseTruthPercent);
     }
 
 }
