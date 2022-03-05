@@ -55,7 +55,6 @@ public class BetManager : MonoBehaviour
     void Update()
     {
         //Kinda ugly to check this in update but waddya gonna do
-        Debug.Log(betAmount);
 
         tempGold = (cachedGold - betAmount);
         coinUIManager.SetGold(tempGold);
